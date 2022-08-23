@@ -1,0 +1,266 @@
+version		=	1.7.12
+
+Issue #194	:	Added ExtrapolateRight boundary condition
+Issue #196	:	Fix problems in h5mgm makefile
+Issue #201	:	Use MPICXX instead of CC to specify compiler in makefile
+
+PR #198		:	Fix problems with #includes in h5mgm.h
+PR #197		:	Add Archer2 configuration files
+
+version		=	1.7.11
+
+General		:	Fixed issue with last fix.
+
+version		=	1.7.10
+
+General		:	Added runtime check of MPI dimensions to aid debugging.
+
+version		=	1.7.9
+
+Public #10	:	Fixed issue with epsilon calculation code using MPI commands in serial build mode.
+
+version		=	1.7.8
+
+Public #8	:	Reorganisation of some build files and updated copyright.
+Public #9	:	Addressed issue with an MPI seg fault on some Windows and Linux systems.
+
+version		=	1.7.7
+
+Public #4	:	Fixed issue resulting in a crash and out of range exception when a single process was used in MPI builds in combination with grid refinement.
+
+version		=	1.7.6
+
+Public #3	:	Updated makefile and building wiki instructions.
+
+version		=	1.7.5
+
+Public #2	:	Fixed build issue due to header conflicts.
+
+version		=	1.7.4
+
+Public #1	:	Fix for momentum exchange giving negative forces when positive expected.
+
+version		=	1.7.3
+
+General		:	Updated makefile to enable OMP directives.
+				Reorganised the FEM implementation to make it easier to add new types of elements.
+
+Issue #172	:	Uniform decomposition tries more options before throwing error.
+
+version		=	1.7.2
+
+General		:	Fix for the issue in 2D where sub-grids had a non-zero size and triggered the initialisation warnings.
+
+Issue #171	:	Fixed issue with point cloud reader not communicating across sub-grids on different processes.
+
+version		=	1.7.1
+
+General		:	Added a debug logging function coloured blue in the log file filter.
+				Added basic OpenMP parallel for loop for future development.
+
+Issue #166	:	Added protection for using corrected sizes without parentheses and better checking.
+Issue #170	:	Fixed issue with placement of objects on halos incorrectly when periodically wrapped.
+
+version		=	1.7.0
+
+General		:	Updated compilation instructions.
+				Bug fixes for IBM.
+				Added facility to restart simulation using a different time step along with python utility.
+				Updated logging formatting in the main method to match new standard.
+			
+Issue #167	:	Fixed issue with MPI gather error when using parallel IBM.	
+Issue #151	:	Fixed issue with buried links when using regularised BC which was causing density fluctuations at the corners.
+Issue #165	:	Fixed issue with incorrect site rejection action for momex.
+Issue #155	:	Fixed bug when activating point cloud debugging features in serial.
+Issue #157	:	Fixed issue with incorrect message passing when using a single core in a given dimension.
+Issue #149	:	Fixed issue with applying regularised BC on corner nodes.
+Issue #161	:	Fixed issue with incorrect writing of forces for IBM bodies in parallel.
+Issue #162	:	Updated terminology for output timers.
+Issue #160	:	Added utility for determining out of domain positions to fix issue with support nodes leaving the domain instead of wrapping.
+
+version 	=	1.6.1
+
+Issue #146	:	Fixed bug in MPI manager initialisation that caused an overrun exception.
+
+version		=	1.6.0
+
+General		:	Added kernel performance improvements which are especially effective when using BB objects. 
+				A new filled box point cloud is available to add to the domain to effectively switch off unnecessary fluid sites by turning them solid.
+				Changed BC setup to make it more flexible in terms of enumerations. Also added slip BC.
+				Added ability to ramp up the Reynolds number from the beginning of the simulation to mitigate crashes due to initial transients.
+				Parallel IBM implemented.
+				Pressure boundary condition added (regularised only).
+				Efficiencies introduced for ramping functions.
+				Moved setBCPrecedence method from utilities to GridObj and renamed.
+				Reworked inlet initialisation.
+				Reworked grid initialisation to ensure consistency with declaration of halos.
+				Added helper for diagnosing HDF5 hangs.
+				Fixed bug with HDF5 hanging when filespaces disagree.
+
+Issue #145	:	Added missing condition for applying extrapolation on a recv layer outlet.
+Issue #55	:	Periodic wrapping of sub-grids is now available by specifying the start and end point to be the same.
+Issue #142	:	Added a reporting mode to MPI builds to use the smart decomposition and load balancing methods to estimate config performance.
+				Need to compile with the L_MPI_TOPOLOGY_REPORT flag on to switch to the mode.
+Issue #141	:	Added capability to have objects placed over grid boundaries.
+				Need to specify grid level as -1 in the geometry config file. Only works for BBB for now.
+Issue #97	:	Added KBC to optimised kernel.
+Issue #140	:	Fixed missing pointers in restart method that was causing seg faults on load.
+
+version		=	1.5.0
+
+General		:	Updated the HDF5 output and the merge tool to include MPI block labels to make decomposition more apparent.
+				Fixed an untracked bug in the HDF5 writer which would cause a hang on certain MPI/sub-grid combos.
+				Added some colourmaps for paraview.
+				Added script for creating symmetric aerofoil point clouds in 2D and 3D with ends.
+				Added MPI buffer size debugging and cross-checking to prevent hidden hangs in future.
+				Added ability of LUMA to predict completion time of simulation.
+				Merge tool now cuts out solid sites to save memory. Also now uses the CleanToGrid filter from paraview -- extra files supplied with the merge tool.
+				VTU XMLs are written instead of the legacy VTK too. Merge tool incremented to v0.3.0.
+				Fixed an issue with the load balancing file output which was given incorrect ops counts.
+
+Issue #138	:	Fixed a bug in the smart decomposition method which would cause a seg fault when used on some 3D problems.
+Issue #46	:	BGK implemented. Set constant in definitions file. 
+Issue #136	:	Upgraded the merge tool to also perform the task of writing out a sorted velocity field from the HDF5 files. Use CLA <sorter>.
+Issue #135	:	Reinstated RBC for a fixed velocity.
+Issue #137	:	Upgraded geometry file and PC reader so objects can easily be centred in the domain if required through keywords in the config.
+Issue #122	:	Changed dt suggest code so it gives the upper limit for dt instead.
+Issue #131	:	More intelligent algorithm implemented for constructing MPI block sizes by driving variable boundaries towards most loaded process.
+
+version		=	1.4.2
+
+General		:	Optimisation of PCpts reader so it scales as O(n) rather than O(n^2).
+
+Issue #132	:	Construction of GridObjs converted to heap allocations. Nested sub-grids are stored as pointers rather than objects.
+				Destructors modified to free memory on parent deletion.
+Issue #123	:	Added auto sub-grid generation capability. User only needs to specify L1 and then padding and the rest is taken care of by the grid manager.
+				Can be disabled in the definitions file, causing the grid manager to use the values specified in the usual way.
+
+version		=	1.4.1
+
+General		:	Added warning macro and improved some of the documentation in the GridUnits.
+				Added debugging capability for Momentum Exchange as well as associated MATLAB tool.
+				
+Issue #129	:	BFL has been added to the optimised kernel.
+				Intersection and Q compute algorithms have been rewritten.
+				BFL and IB body classes restructured to reduce duplication.
+				Momentum exchange has been upgraded to work with BFL bodies as well as BBB.
+
+version		=	1.4.0
+
+General		:	Wholesale changes to coordinate systems and hence changes in the initialisation machinery.
+				Additional bug fixes in labelling and coarse limit interpretation.
+				Fixed rare but major bug that occurs with HDF writable region definition when only a corner of a grid is built on a rank exclusively on a halo region. Changed implementation to fix.
+				Improvements to initialisation clarity and debug messaging.
+				Old boundary condition methods marked as DEPRECATED.
+				IBBody constructor for PC added to move away from the "make_body()" wrappers which are messy.
+				Created new Enumerations header and added more headers to the stdafx.h header.
+				Extended the error function to create an info function as well for more consistent logging.
+				User input except L_RHOIN is now expected in dimensionless units.
+				Documentation moved to VM @ 130.88.97.222.
+				New GEOMETRY CONFIG runtime infrastructure added for adding multiple bodies of different types into a simulation. Replaces the old compile-time mechanisms.
+				
+Issue #127	:	BBB objects are now able to be read from the new geometry configuration file.
+Issue #125	:	Probe output method now generalised so it will search for a probe position on the finest grid first and then ascend the hierarchy until point is found.
+Issue #111  :   The initial velocity field can now be read from a file by defining L_INIT_VELOCITY_FROM_FILE in definitions.h
+Issue #121	:	Fixed bug in 3D serial cases with Grid Manager initialisation that caused the wrong writable region to be set and corrupted HDF5 data.
+Issue #5    :   User input except L_RHOIN is now expected in dimensionless units. L_RHOIN is expected in LBM units. 
+				NOTE: The simulation time and the interval at which the results are written is still in number of time steps (i.e. in LBM units)   				
+Issue #107	:	Improved inheritance relationships for the Body class to reduce code duplication.
+Issue #106	:	Added new Grid Manager class to improve handling of grid information. MPI manager now only should be instantiated when using MPI.
+Issue #116	:	Fixed issue with compiling with probe output turned on.	
+Issue #104	:	Relaxed restriction requiring uniform decomposition by using a slice generator to decompose.
+Issue #114	:	Allowed the embedding of sub-grids in walls once again after coordinate system and initialisation change.
+
+version		=	1.3.0
+
+General		:	Reinstated force calculation and included a few other optimisations.
+				Added new refinement guide spreadsheet.
+				Optimisation for hdf2vtk (h5mgm) conversion tool plus handles missing datasets and has quiet option. Now v0.2.2.
+				Added a filled cylinder point cloud to address non-physical transients.
+				Added macro to allow marking of functions as deprecated.
+				Fixed an issue with the scaling on the cloud reader -- not documented on the tracker.
+				Standardised macro definitions.
+				Fixed an unlogged issue with the refinement ratio not being initialised correctly.
+				H5MGM tool updated to give more information to the user and fix an compilation issue with GNU associated with labels.
+				Memory footprint of H5MGM has now been dramatically reduced by removing unnecessary mesh points previously stored.
+
+Issue #100	:	Fixed issue with HDF5 writer when TL is completely within a halo region and data is over-trimmed. New implementation for halo trimming.
+Issue #74	:	Load balance indicator and file write-out added.
+Issue #96	:	BGK Smagorinsky model added to the optimised kernel.
+Issue #95	:	Fixed typo in pre-processor directive that prevented the use of the 3D models.
+Issue #92	:	Replaced use of halo descriptor data with simpler solution for sub-grid striding in slab copies to fix write-out inconsistencies.
+Issue #93	:	Restart file mechanism changed so that a single file is written out per rank to speed-up the process of restarting large meshes with a large number of cores.
+				This removes the capability to restart onto a different topology.
+Issue #35	:	Compression of old LUMA algorithm into a single loop and marked older kernel and elements as deprecated. 3X speed-up using optimised kernel.
+				Can be selected using the L_USE_OPTIMISED_KERNEL macro. Will reinstate other functionality as required -- raise a ticket.
+Issue #91	:	Predictor-corrector function deprecated in favour of new kernel function using Li method for IBM.
+Issue #65	:	Added FGA writer for export of field data to UE4.
+Issue #59	:	Fix in place for the momentum exchange to resolve issue with scaling and conflict with outlet BC.
+Issue #90	:	Fixed probe crash when number of probes 1 in a given direction.
+Issue #85	:	Reinstated D3Q19 velocity model.
+Issue #89	:	Fixed issue with probe output path.
+
+version		=	1.2.0
+
+General 	: 	Compatibility between GNU and MSVC compilers has been improved through header/forward declaration rearrangement.
+				IS_NAN() function switched to macro definition.
+				LBM_multi routine has been compacted to improve readability.
+				Restart functionality has been improved allowing IBM on sub-grids.
+				Expensive support node calculation has been removed.
+				Gravity force scaling across sub-grids has been fixed.
+				Wall thickness can be arbitrarily set for front, back, top and bottom walls.
+				Changed the terminal output to be every L_out_every time steps.
+				Removed redundant indexToPosition() method.
+				Resetting the force vectors is now a separate routine to get rid of the flag for forceGrid().
+				LBM_forcegrid method renamed to LBM_forceGrid to match convention.
+				IBM_flag renamed to ibmFlag to match convention.
+				Removed repeatFlag as unnecessary.
+				Refactored the OM methods to use iBody owner rather than passing a GridObj pointer about.
+				Now need VTK source files to build the H5MGM tool.
+
+Issue #88	:	Fixed erroneous error when using custom MPI sizes.
+Issue #87	:	Fixed GNU compiler warnings when using HDF5.
+Issue #66	:	Test Suite capability added.
+Issue #83	:	Fixed issue with BFL reader not computing Q values correctly.
+Issue #84	:	Fixed MPI crash on exit on Linux.
+Issue #80	: 	Model-independent version of extrapolation exit on right-hand wall.
+Issue #81	: 	Added grid sizes as GridObj property.
+Issue #73	: 	Some Doxygen documentation added and will involve throughout the releases to contain more information.
+Issue #59	: 	Force calculation for BB objects.
+Issue #39	: 	TL automatic exclusion and reuse of C utility rather than C++ API for HDF5. H5MGM tool v0.2 included in /tools and writes VTK.
+Issue #79	: 	Fixed bug which allowed serial calls of a utility only compatible with MPI builds; also fixes for writing out IBB to restart correctly.
+Issue #69	: 	Patch to fix new point cloud reader where solid bodies were not being inserted correctly. Removal of methods reliant on scaled positions.
+Issue #77	: 	Removed unnecessary virtual wind tunnel definitions and fixed HDF5 issue when embedding sub-grids.
+Issue #76	: 	Fixed crash when using solid block due to erroneous Re definition.
+Issue #3	:	Added capability for IBM linking to sub-grids.
+
+version		=	1.1.0
+
+Issue #75	: 	New tool for inlet profile generator -- add a tab for your own type of profile.
+Issue #69	: 	Unification of point cloud readers and added capability for IBB construction from point clouds.
+Issue #39	: 	Removal of VTK and Tecplot writers and implementation of HDF5 writer instead.
+Issue #72	:	Added enumeration for common options in utility routines, boundary methods and LatTyp for ease of use.
+Issue #70	: 	Explicit casting of unsigned and signed integer types to remove compilation warnings on 64-bit systems.
+Issue #68	: 	Macro convention redefined to avoid current and future conflicts.
+Issue #63	: 	KBC collision operator added in place of MRT operator, Zou-He velocity inlet removed, Uniform Inlet setting removed.
+
+version		=	1.0.3
+
+Issue #64	: 	Fixed output directory segmentation for large MPI jobs
+Issue #62	: 	Fixed Reynolds number definition for pointcloud/BFL objects
+
+version		=	1.0.2
+
+Issue #61	: 	Added ability to scale an object with respect to any direction not just x direction
+Issue #60	: 	Fixed issue with BB not being applied when loading an object from a point cloud.
+
+version		=	1.0.1
+
+Issue #57	: 	Fix added to allow generalised regularised on right hand and upper and back walls to impose velocity with correct direction.
+Issue #58	: 	Fixed do nothing inlet from crashing since wall-embedded sub-grid changes.
+Issue #49	: 	Fixed z-direction position initialisation in MPI builds which addresses hangs witnessed in earlier versions.
+
+
+version		=	1.0
+
+General		:	Initial release of the code.
